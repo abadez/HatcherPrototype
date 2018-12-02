@@ -1,0 +1,9 @@
+CFLAGS += -g -mmcu=atxmega128a1 # Atmel atxmega128a1
+HEXGEN = avr-objcopy
+
+all: $(OUTPUT_FILE)
+send: all
+	#sudo avrdude -p x128a1 -c avrispv2 -P /dev/ttyACM0 -e ; if [ $$? -neq 0 ] ; then $(error Can't connect to device) ; fi
+	#sudo avrdude -p x128a1 -c avrispv2 -P /dev/ttyACM0 -u -U flash:w:$(OUTPUT_FILE)
+	sudo avrdude -p x128a1 -c flip2 -P `lsusb | grep "XMEGA-A1" |awk '{ print "usb:"$2":"substr($4, 1, length($4)-1) }'` -e ; if [ $$? -neq 0 ] ; then $(error Can't connect to device) ; fi
+	sudo avrdude -p x128a1 -c flip2 -P `lsusb | grep "XMEGA-A1" |awk '{ print "usb:"$2":"substr($4, 1, length($4)-1) }'` -u -U flash:w:$(OUTPUT_FILE)

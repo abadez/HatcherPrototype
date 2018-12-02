@@ -1,0 +1,6 @@
+ifeq "$(CFG)" "Release"
+
+    # Hardware specifying flags
+    CFLAGS += -march=armv8-a+crc -mtune=cortex-a53 # Odroid C2
+
+endif
